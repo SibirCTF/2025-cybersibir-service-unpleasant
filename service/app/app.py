@@ -6,12 +6,12 @@ app = Flask(__name__, template_folder="templates")
 # TODO: PostgreSQL DB
 @app.route('/')
 def get_index():
-	return 'index'  # TODO: render_template
+	return render_template("index.html")
 
 
 @app.route('/register')
 def get_register():
-	return 'register'  # TODO: render_template
+	return render_template("register.html")
 
 
 @app.route('/register', methods=["POST"])
@@ -22,7 +22,7 @@ def register():
 
 @app.route('/login')
 def get_login():
-	return 'login'  # TODO: render_template
+	return render_template("login.html")
 
 
 @app.route('/login', methods=["POST"])
@@ -33,12 +33,12 @@ def login():
 
 @app.route('/feed')
 def get_feed():
-	return 'feed'  # TODO: render_template
+	return render_template("feed.html")
 
 
 @app.route('/create_abomination')
 def get_create_abomination():
-	return 'create_abomination'  # TODO: render_template
+	return render_template("create_abomination.html")
 
 
 @app.route('/create_abomination', methods=["POST"])
@@ -57,4 +57,4 @@ def get_my_abominations():
 
 
 if __name__ == '__main__':
-	app.run()
+	app.run(host="0.0.0.0")
