@@ -51,9 +51,14 @@ def get_abomination(id):
 	return f'abomination-{id}'  # TODO: render_template  # TODO: business logic
 
 
-@app.route('/my_abominations/')
+@app.route('/my_abominations')
 def get_my_abominations():
-	return 'my_abominations'  # TODO: render_template  # TODO: business logic
+	return render_template("my_abominations.html")  # TODO: business logic
+
+
+@app.route('/logout', methods=["GET"])
+def logout():
+	return redirect("/")  # TODO: business logic
 
 
 if __name__ == '__main__':
