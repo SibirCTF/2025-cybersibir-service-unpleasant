@@ -1,4 +1,5 @@
 from flask import Flask, render_template, render_template_string, make_response, request, redirect
+import psycopg2
 
 app = Flask(__name__, template_folder="templates")
 
@@ -15,9 +16,9 @@ def get_register():
 
 
 @app.route('/register', methods=["POST"])
-def register():
+def register():  # TODO: business logic
 	username, password = request.form["username"], request.form["password"]
-	return 'register_post'  # TODO: business logic
+	return 'register_post'
 
 
 @app.route('/login')
@@ -26,13 +27,13 @@ def get_login():
 
 
 @app.route('/login', methods=["POST"])
-def login():
+def login():  # TODO: business logic
 	username, password = request.form["username"], request.form["password"]
-	return 'login_post'  # TODO: business logic
+	return 'login_post'
 
 
 @app.route('/feed')
-def get_feed():
+def get_feed():  # TODO: business logic
 	return render_template("feed.html")
 
 
@@ -42,23 +43,23 @@ def get_create_abomination():
 
 
 @app.route('/create_abomination', methods=["POST"])
-def create_abomination():
-	return 'create_abomination_post'  # TODO: business logic
+def create_abomination():  # TODO: business logic
+	return 'create_abomination_post'
 
 
 @app.route('/abomination/<int:id>')
-def get_abomination(id):
-	return f'abomination-{id}'  # TODO: render_template  # TODO: business logic
+def get_abomination(id):  # TODO: render_template  # TODO: business logic
+	return f'abomination-{id}'
 
 
-@app.route('/my_abominations')
-def get_my_abominations():
-	return render_template("my_abominations.html")  # TODO: business logic
+@app.route('/my_abominations/')
+def get_my_abominations():  # TODO: business logic
+	return render_template("my_abominations.html")
 
 
 @app.route('/logout', methods=["GET"])
-def logout():
-	return redirect("/")  # TODO: business logic
+def logout():  # TODO: business logic
+	return redirect("/")
 
 
 if __name__ == '__main__':
