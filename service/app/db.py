@@ -1,5 +1,4 @@
 import psycopg2
-# TODO: init_db
 # TODO: Feed
 # TODO: Create-abomination
 
@@ -40,3 +39,13 @@ def login_user(username, password):
 	conn.commit()
 	conn.close()
 	return user[0][0]
+
+
+def feed():  # TODO: Test
+	conn = get_db_connection()
+	cursor = conn.cursor()
+	cursor.execute(f"SELECT * FROM abominations WHERE is_private = False")
+	abominations = cursor.fetchall()
+	conn.commit()
+	conn.close()
+	return abominations

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, render_template_string, make_response, request, redirect
 import psycopg2
+import db
 
 app = Flask(__name__, template_folder="templates")
 
@@ -58,7 +59,8 @@ def login():  # TODO: business logic
 
 @app.route('/feed')
 def get_feed():  # TODO: business logic
-	return render_template("feed.html")
+	return db.feed()
+	# return render_template("feed.html")
 
 
 @app.route('/create_abomination')
