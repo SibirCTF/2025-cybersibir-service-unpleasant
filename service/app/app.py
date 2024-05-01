@@ -4,7 +4,30 @@ import psycopg2
 app = Flask(__name__, template_folder="templates")
 
 
-# TODO: PostgreSQL DB
+# TODO: session token/login
+
+# TODO: copy to .env or .config file
+def get_db_connection():
+	conn = psycopg2.connect(host='localhost',
+	                        port=5432,
+	                        database='flask_test',  # TODO: database name
+	                        user='postgres',
+	                        password='postgres')
+	return conn
+
+
+@app.route('/dbtest')  # TODO: Remove
+def get_db():
+	conn = get_db_connection()
+	cur = conn.cursor()
+	cur.execute("SELECT current_database()")
+	version = cur.fetchall()
+	conn.commit()
+	cur.close()
+	conn.close()
+	return version
+
+
 @app.route('/')
 def get_index():
 	return render_template("index.html")
@@ -15,10 +38,10 @@ def get_register():
 	return render_template("register.html")
 
 
-@app.route('/register', methods=["POST"])
+@app.route('/register', methods=["POST"])  # TODO: session token/login
 def register():  # TODO: business logic
 	username, password = request.form["username"], request.form["password"]
-	return 'register_post'
+	return 'register_post / redirect '
 
 
 @app.route('/login')
@@ -26,9 +49,10 @@ def get_login():
 	return render_template("login.html")
 
 
-@app.route('/login', methods=["POST"])
+@app.route('/login', methods=["POST"])  # TODO: session token/login
 def login():  # TODO: business logic
 	username, password = request.form["username"], request.form["password"]
+
 	return 'login_post'
 
 
@@ -44,7 +68,7 @@ def get_create_abomination():
 
 @app.route('/create_abomination', methods=["POST"])
 def create_abomination():  # TODO: business logic
-	return 'create_abomination_post'
+	return 'create_abomination_post / redirect abomination/{id}'
 
 
 @app.route('/abomination/<int:id>')
@@ -57,7 +81,7 @@ def get_my_abominations():  # TODO: business logic
 	return render_template("my_abominations.html")
 
 
-@app.route('/logout', methods=["GET"])
+@app.route('/logout', methods=["GET"])  # TODO: session token/login
 def logout():  # TODO: business logic
 	return redirect("/")
 
