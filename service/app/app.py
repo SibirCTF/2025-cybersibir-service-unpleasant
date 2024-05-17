@@ -1,11 +1,17 @@
 from flask import Flask, render_template, render_template_string, make_response, request, redirect
 import psycopg2
 import db
+import os
+import jwt
 
 app = Flask(__name__, template_folder="templates")
+jwt_key = os.urandom(64)
 
 
-# TODO: session token/login
+
+def generate_jwt(user_id):
+	return jwt.encode({"user_id": user_id}, jwt_key, algorithm="HS256")
+
 
 # TODO: copy to .env or .config file
 def get_db_connection():
@@ -39,10 +45,14 @@ def get_register():
 	return render_template("register.html")
 
 
-@app.route('/register', methods=["POST"])  # TODO: session token/login
-def register():  # TODO: business logic
+@app.route('/register', methods=["POST"])
+def register():
 	username, password = request.form["username"], request.form["password"]
-	return 'register_post / redirect '
+	id = db.register_user(username, password)
+	if id is False:
+		return render_template("register.html", show_error=True)
+	resp = make_response(redirect("login.html"))
+	return resp
 
 
 @app.route('/login')
@@ -50,11 +60,15 @@ def get_login():
 	return render_template("login.html")
 
 
-@app.route('/login', methods=["POST"])  # TODO: session token/login
-def login():  # TODO: business logic
+@app.route('/login', methods=["POST"])
+def login():
 	username, password = request.form["username"], request.form["password"]
-
-	return 'login_post'
+	user_id = db.login_user(username, password)
+	if user_id is False:
+		return render_template("login.html", show_error=True)
+	resp = make_response(redirect("feed.html"))
+	resp.set_cookie("session", generate_jwt(user_id).decode())
+	return resp
 
 
 @app.route('/feed')

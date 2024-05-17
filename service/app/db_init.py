@@ -1,5 +1,6 @@
 import psycopg2
 
+# TODO: copy to .env or .config file
 conn = psycopg2.connect(host='localhost',
                         port=5432,
                         database='flask_test',  # TODO: database name

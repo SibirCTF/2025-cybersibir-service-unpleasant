@@ -2,24 +2,26 @@
 <html lang="ru">
 
 <body class="body">
-    <header class="page-header">
-        <div class="page-header__container">
-            <nav class="page-header__nav">
-                <a href="/feed" class="page-header__nav-link feed">Feed</a>
-                <a href="/my_abominations" class="page-header__nav-link feed">Мои киборги</a>
-                <a href="/create_abomination" class="page-header__nav-link comment">Создать киборга</a>
-                <a href="/logout" class="page-header__nav-link reglog">Выйти</a> <!--тут хз на что именно ссылку делать-->
-            </nav>
-        </div>
-    </header>
-    <div class="main">
-        <h2 class="feed__title">Кто-то сделал это!</h2>
-        <div class="feed__abomination">
-            <article class="abomination__list">
-                <a href="#" class="abomination__list link"></a>
-            </article>
-            <div class="abomination__container"></div>
-        </div><!--тут тоже не знаю как прописать список заметок, только есл просто контейнер сделать, чтобы они потом в нем появлялись-->
+  <header class="page-header">
+    <link rel="stylesheet" href="styles/styles.min.css">
+    <div class="page-header__container">
+      <nav class="page-header__nav">
+        <a href="feed.html" class="page-header__nav-link feed">Feed</a>
+        <a href="abomination.html" class="page-header__nav-link feed">Мои заметки</a>
+        <a href="create.html" class="page-header__nav-link comment">Создать заметку</a>
+        <a href="index.html" class="page-header__nav-link reglog">Выйти</a> <!--тут хз на что именно ссылку делать-->
+      </nav>
     </div>
+  </header>
+  <div class="main">
+    <h2 class="feed__title">Кто-то уже сделал это!</h2>
+    <div class="feed__abomination">
+      <article class="abomination__list">
+        <a href="#" class="abomination__list link"></a>
+      </article>
+      <div class="abomination__container"></div>
+    </div><!--тут тоже не знаю как прописать список заметок, только есл просто контейнер сделать, чтобы они потом в нем появлялись-->
+  </div>
 </body>
+
 </html>

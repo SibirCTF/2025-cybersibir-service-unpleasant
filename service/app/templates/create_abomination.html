@@ -1,76 +1,91 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<div class="main">
-    <div class="page-header__container">
-        <nav class="page-header__nav">
-            <a href="feed.html" class="page-header__nav-link feed">Feed</a>
-            <a href="#" class="page-header__nav-link reglog">Выйти</a>
-        </nav>
+<body class="body">
+  <div class="create">
+    <div class="page-header-create">
+      <link rel="stylesheet" href="styles/styles.min.css">
+      <nav class="page-header__nav">
+        <a href="feed.html" class="page-header__nav-link feed">Feed</a>
+        <a href="index.html" class="page-header__nav-link exit">Выйти</a>
+      </nav>
     </div>
     <div class="create">
-        <article class="create__list">
-            <a href="#" class="create__list link"></a>
-            <h2 class="create__title">Сделай сам и покажи всем!</h2>
-            <h2 class="create__text">Или не показывай</h2>
-        </article>
-        <div class="create__container">
-            <div class="create__list">
-                <label class="create__field field">
-                    <input type="text" class="field__input" placeholder="name" name="name" required/>
-                </label>
-                <label class="create__field field">
-                    <input type="text" class="field__input" placeholder="gander" name="gender" required/>
-                </label>
-                <div class="create__field select">
-                    <h6 class="create__title">Head</h6>
-                    <select name="part" class="create__select">
-                        <option value="1">Придумай</option><!--придумай тут че-->
-                        <option value="2">Придумай1</option>
-                        <option value="3">Придумай2</option>
-                    </select>
-                </div>
-                <div class="create__field select">
-                    <h6 class="create__title">Eye</h6>
-                    <select name="part" class="create__select">
-                        <option value="1">Придумай</option><!--придумай тут че-->
-                        <option value="2">Придумай1</option>
-                        <option value="3">Придумай2</option>
-                    </select>
-                </div>
-                <div class="create__field select">
-                    <h6 class="create__title">Body</h6>
-                    <select name="part" class="create__select">
-                        <option value="1">Придумай</option><!--придумай тут че-->
-                        <option value="2">Придумай1</option>
-                        <option value="3">Придумай2</option>
-                    </select>
-                </div>
-                <div class="create__field select">
-                    <h6 class="create__title">Arm</h6>
-                    <select name="part" class="create__select">
-                        <option value="1">Придумай</option><!--придумай тут че-->
-                        <option value="2">Придумай1</option>
-                        <option value="3">Придумай2</option>
-                    </select>
-                </div>
-                <div class="create__field select">
-                    <h6 class="create__title">Leg</h6>
-                    <select name="part" class="create__select">
-                        <option value="1">Придумай</option><!--придумай тут че-->
-                        <option value="2">Придумай1</option>
-                        <option value="3">Придумай2</option>
-                    </select>
-                </div>
+      <article class="create__words">
+        <a href="abomination.html" class="create__list link"></a>
+        <h2 class="words__title">Сделай сам и покажи всем!</h2>
+        <h2 class="words__text">Или не показывай...</h2>
+      </article>
 
-                <label class="create__check">
-                    <span class="check__label">Private</span>
-                    <input type="checkbox" class="check__input" name="private" />
-                    <span class="check__mark"></span>
-                </label>
 
-                <button type="button" class="create__field submit">Создать</button>
-            </div>
+      <div class="create__container">
+        <div class="create__list">
+          <div class="create__field name">
+            <label class="create__title">
+              <input type="text" class="field__input" name="name" placeholder="Name" />
+            </label>
+          </div>
+          <div class="create__field name">
+            <label class="create__title">
+              <input type="text" class="field__input" name="gender" placeholder="Gender" required />
+            </label>
+          </div>
+
+          <div class="create__field select">
+            <select name="part" class="create__select">
+              <option value="" disabled selected hidden>Head</option>
+              <option value="1">Придумай</option>
+              <option value="2">Придумай1</option>
+              <option value="3">Придумай2</option>
+            </select>
+          </div>
+
+          <div class="create__field select">
+            <select name="part" class="create__select">
+              <option value="" disabled selected hidden>Eye</option>
+              <option value="1">Придумай</option>
+              <option value="2">Придумай1</option>
+              <option value="3">Придумай2</option>
+            </select>
+          </div>
+
+          <div class="create__field select">
+            <select name="part" class="create__select">
+              <option value="" disabled selected hidden>Bode</option>
+              <option value="1">Придумай</option>
+              <option value="2">Придумай1</option>
+              <option value="3">Придумай2</option>
+            </select>
+          </div>
+
+          <div class="create__field select">
+            <select name="part" class="create__select">
+              <option value="" disabled selected hidden>Arm</option>
+              <option value="1">Придумай</option>
+              <option value="2">Придумай1</option>
+              <option value="3">Придумай2</option>
+            </select>
+          </div>
+
+          <div class="create__field select">
+            <select name="part" class="create__select">
+              <option value="" disabled selected hidden>Leg</option>
+              <option value="1">Придумай</option>
+              <option value="2">Придумай1</option>
+              <option value="3">Придумай2</option>
+            </select>
+          </div>
+
+          <label class="create__check">
+            <span class="check__label">Private</span>
+            <input type="checkbox" class="check__input" name="private" />
+            <span class="check__mark"></span>
+            <button type="button" class="create__submit">Создать</button>
+          </label>
+
         </div>
+      </div>
     </div>
+
 </html>
+</body>

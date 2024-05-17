@@ -5,6 +5,7 @@ import psycopg2
 # TODO: sqlescape
 
 
+# TODO: copy to .env or .config file
 def get_db_connection():
 	conn = psycopg2.connect(host='localhost',
 	                        port=5432,
