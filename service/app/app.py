@@ -1,12 +1,11 @@
 from flask import Flask, render_template, render_template_string, make_response, request, redirect
 import psycopg2
-import db
+import db, db_init
 import os
 import jwt
 
 app = Flask(__name__, template_folder="templates")
-jwt_key = os.urandom(64)
-
+jwt_key = os.urandom(64)  # datetime vuln? known seed
 
 
 def generate_jwt(user_id):
@@ -67,12 +66,12 @@ def login():
 	if user_id is False:
 		return render_template("login.html", show_error=True)
 	resp = make_response(redirect("feed.html"))
-	resp.set_cookie("session", generate_jwt(user_id).decode())
+	resp.set_cookie("diy_session", generate_jwt(user_id))
 	return resp
 
 
 @app.route('/feed')
-def get_feed():  # TODO: business logic
+def get_feed():  # TODO:render_template / jinja pattern?
 	return db.feed()
 	# return render_template("feed.html")
 
@@ -84,22 +83,36 @@ def get_create_abomination():
 
 @app.route('/create_abomination', methods=["POST"])
 def create_abomination():  # TODO: business logic
-	return 'create_abomination_post / redirect abomination/{id}'
+	id_owner = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
+	name, gender, is_private, head, eye, body, arm, leg = \
+		request.form["name"], request.form["gender"], request.form['is_private'], request.form['head'], \
+		request.form['eye'], request.form['body'], request.form['arm'], request.form['leg']
+	db.create_abomination(id_owner, name, gender, is_private, head, eye, body, arm, leg)
+	return 'create_abomination_post / redirect abomination/{id}'  # todo мб на поху в my_abominations редиректить. покумекать надо малех
 
 
 @app.route('/abomination/<int:id>')
-def get_abomination(id):  # TODO: render_template  # TODO: business logic
-	return f'abomination-{id}'
+def get_abomination(abom_id):  # TODO: render_template
+	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
+	abomination = db.abomination(abom_id, user_id)
+	if abomination is False:
+		return '404'  # todo: 404
+	return abomination
+	# return render_template("abomination.html"  # todo: картинки)
 
 
 @app.route('/my_abominations/')
-def get_my_abominations():  # TODO: business logic
-	return render_template("my_abominations.html")
+def get_my_abominations():  # TODO: render_template
+	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
+	return db.my_abominations(user_id)
+	# return render_template("my_abominations.html")
 
 
-@app.route('/logout', methods=["GET"])  # TODO: session token/login
-def logout():  # TODO: business logic
-	return redirect("/")
+@app.route('/logout', methods=["GET"])
+def logout():
+	resp = make_response(redirect('/'))
+	resp.delete_cookie("diy_session")
+	return resp
 
 
 if __name__ == '__main__':

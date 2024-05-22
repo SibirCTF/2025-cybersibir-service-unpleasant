@@ -16,21 +16,21 @@ cursor.execute("DROP TABLE IF EXISTS users")
 
 cursor.execute("CREATE TABLE IF NOT EXISTS users("
                "id SERIAL PRIMARY KEY, "
-               "username varchar[50] NOT NULL, "
-               "password varchar[50] NOT NULL)"
+               "username character varying(50) NOT NULL, "
+               "password character varying(50) NOT NULL)"
                )
 
 cursor.execute("CREATE TABLE IF NOT EXISTS implants("
-               "bodypart character varying(50)[] NOT NULL,"
-               "name character varying(50)[] NOT NULL,"
+               "bodypart character varying(50) NOT NULL,"
+               "name character varying(50) NOT NULL,"
                "id integer NOT NULL)"
                )
 
 cursor.execute("CREATE TABLE IF NOT EXISTS abominations("
                "id SERIAL NOT NULL PRIMARY KEY,"
                "id_owner integer NOT NULL REFERENCES users (id),"
-               "name character varying(50)[] NOT NULL,"
-               "gender character varying(50)[] NOT NULL,"
+               "name character varying(50) NOT NULL,"
+               "gender character varying(50) NOT NULL,"
                "is_private boolean NOT NULL,"
                "head integer NOT NULL,"
                "eye integer NOT NULL,"
@@ -38,3 +38,6 @@ cursor.execute("CREATE TABLE IF NOT EXISTS abominations("
                "arm integer NOT NULL,"
                "leg integer NOT NULL)"
                )
+
+conn.commit()
+conn.close()
