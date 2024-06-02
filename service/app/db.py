@@ -1,11 +1,15 @@
 import psycopg2
-# TODO: Feed
-# TODO: Create-abomination
+import json
 
-# TODO: sqlescape
+# TODO: sqlescape?
+
+# json_raw = """ {
+# 	"id"	: 12,
+# 	"name"	: name
+# } """
+# jsondata = json.loads(json_raw)
 
 
-# TODO: copy to .env or .config file
 def get_db_connection():
 	conn = psycopg2.connect(host='localhost',
 	                        port=5432,
@@ -26,6 +30,7 @@ def register_user(username, password):
 	cursor.execute(f"SELECT id FROM users WHERE username='{username}'")
 	id = cursor.fetchall()
 	conn.commit()
+	cursor.close()
 	conn.close()
 	return id
 
@@ -38,50 +43,66 @@ def login_user(username, password):
 	if not user:
 		return False
 	conn.commit()
+	cursor.close()
 	conn.close()
 	return user[0][0]
 
 
-def feed():  # TODO: Test
+def feed(user_id):  # TODO: Test
 	conn = get_db_connection()
 	cursor = conn.cursor()
-	cursor.execute(f"SELECT * FROM abominations WHERE is_private = False")  # todo: check for user_id ( * or * )
-	_abominations = cursor.fetchall()
+	cursor.execute(f"SELECT * FROM abominations WHERE is_private = False OR id_owner = {user_id}")
+	feed_abominations = cursor.fetchall()
 	conn.commit()
+	cursor.close()
 	conn.close()
-	return _abominations
+	return feed_abominations
 
 
 def abomination(abom_id, user_id):
 	conn = get_db_connection()
 	cursor = conn.cursor()
 	cursor.execute(f"SELECT * FROM abominations WHERE id = {abom_id}")
-	_abomination = cursor.fetchall()
-	if not abomination:
+	specific_abomination = cursor.fetchall()
+	if not specific_abomination:
+		conn.commit()
+		cursor.close()
+		conn.close()
 		return False
-	# TODO: parse json, get user_id, check
+	# todo: test
+	id_owner = specific_abomination[0][1]
+	if user_id != id_owner:
+		conn.commit()
+		cursor.close()
+		conn.close()
+		return False
+
 	conn.commit()
+	cursor.close()
 	conn.close()
-	return _abomination
+	return specific_abomination
 
 
 def my_abominations(user_id):
 	conn = get_db_connection()
 	cursor = conn.cursor()
-	cursor.execute(f"SELECT * FROM abominations WHERE id = {user_id}")
-	_my_abominations = cursor.fetchall()
+	cursor.execute(f"SELECT * FROM abominations WHERE id_owner = {user_id}")
+	user_abominations = cursor.fetchall()
 	conn.commit()
+	cursor.close()
 	conn.close()
-	return _my_abominations
+	return user_abominations
 
 
-def create_abomination(id_owner, name, gender, is_private, head, eye, body, arm, leg):  # TODO
+def create_abomination(id_owner, name, gender, is_private, head, eye, body, arm, leg):
 	conn = get_db_connection()
 	cursor = conn.cursor()
 	cursor.execute(f"INSERT INTO abominations"
 	               f"(id_owner, name, gender, is_private, head, eye, body, arm, leg) VALUES "
 	               f"({id_owner}, {name}, {gender}, {is_private}, {head}, {eye}, {body}, {arm}, {leg});")
-	# todo как айдишник постать) есть идея через my_abominations. Или ваще хуй забить.
+	cursor.execute(f"SELECT id FROM abominations WHERE id_owner = {id_owner} ORDER BY id DESC LIMIT 1;")
+	new_abomination = cursor.fetchall()
 	conn.commit()
+	cursor.close()
 	conn.close()
-	return abomination
+	return new_abomination[0][0]

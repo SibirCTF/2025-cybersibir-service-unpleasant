@@ -1,6 +1,6 @@
 import psycopg2
+# launch in dockerfile? (command = [python, init_db.py])
 
-# TODO: copy to .env or .config file
 conn = psycopg2.connect(host='localhost',
                         port=5432,
                         database='flask_test',  # TODO: database name
@@ -9,21 +9,21 @@ conn = psycopg2.connect(host='localhost',
 
 cursor = conn.cursor()
 
-cursor.execute("DROP TABLE IF EXISTS abominations")
-cursor.execute("DROP TABLE IF EXISTS implants")
-cursor.execute("DROP TABLE IF EXISTS users")
+cursor.execute("DROP TABLE IF EXISTS abominations;")
+cursor.execute("DROP TABLE IF EXISTS implants;")
+cursor.execute("DROP TABLE IF EXISTS users;")
 
 
 cursor.execute("CREATE TABLE IF NOT EXISTS users("
                "id SERIAL PRIMARY KEY, "
                "username character varying(50) NOT NULL, "
-               "password character varying(50) NOT NULL)"
+               "password character varying(50) NOT NULL);"
                )
 
 cursor.execute("CREATE TABLE IF NOT EXISTS implants("
                "bodypart character varying(50) NOT NULL,"
                "name character varying(50) NOT NULL,"
-               "id integer NOT NULL)"
+               "id integer NOT NULL);"
                )
 
 cursor.execute("CREATE TABLE IF NOT EXISTS abominations("
@@ -36,8 +36,9 @@ cursor.execute("CREATE TABLE IF NOT EXISTS abominations("
                "eye integer NOT NULL,"
                "body integer NOT NULL,"
                "arm integer NOT NULL,"
-               "leg integer NOT NULL)"
+               "leg integer NOT NULL);"
                )
 
 conn.commit()
+cursor.close()
 conn.close()
