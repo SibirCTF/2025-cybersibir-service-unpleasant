@@ -1,9 +1,25 @@
 import psycopg2
 # launch in dockerfile? (command = [python, init_db.py])
 
+# create_db
 conn = psycopg2.connect(host='localhost',
                         port=5432,
-                        database='flask_test',  # TODO: database name
+                        # database='flask_test',  # database name
+                        user='postgres',
+                        password='postgres')
+
+cursor = conn.cursor()
+cursor.execute("DROP DATABASE IF EXISTS flask_db")  # more friendly solution?
+cursor.execute("CREATE DATABASE flask_db;")
+
+conn.commit()
+cursor.close()
+conn.close()
+
+# create_tables
+conn = psycopg2.connect(host='localhost',
+                        port=5432,
+                        database='flask_test',  # database name
                         user='postgres',
                         password='postgres')
 
