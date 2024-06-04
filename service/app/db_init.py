@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 # launch in dockerfile? (command = [python, init_db.py])
 
 # create_db
@@ -8,8 +9,10 @@ conn = psycopg2.connect(host='localhost',
                         user='postgres',
                         password='postgres')
 
+conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 cursor = conn.cursor()
-cursor.execute("DROP DATABASE IF EXISTS flask_db")  # more friendly solution?
+
+cursor.execute("DROP DATABASE IF EXISTS flask_db;")  # more friendly solution?
 cursor.execute("CREATE DATABASE flask_db;")
 
 conn.commit()

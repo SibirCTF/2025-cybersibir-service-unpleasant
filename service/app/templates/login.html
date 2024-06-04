@@ -3,33 +3,39 @@
 <header class="page-header">
   <div class="page-header__container">
     <nav class="page-header__nav">
-      <a href="../feed.html" class="feed">Feed</a>
-      <a href="../register.html" class="reg">Зарегистрироваться</a>
-      <a href="../login.html" class="log">Войти</a>
+
+      <a href="register" class="reg">Зарегистрироваться</a>
+      <a href="login" class="log">Войти</a>
     </nav>
   </div>
 </header>
 <html lang="ru">
-<link rel="stylesheet" href="styles/styles.min.css">
+<link rel="stylesheet" href="static/styles/styles.min.css">
 
 <body class="reg">
   <div class="reg">
     <div class="reg__wrapper">
       <div class="reg__form">
         <div class="form__section">
-          <div class="form__list">
-            <label class="form__field field">
-              <input type="text" class="field__input" placeholder="login" name="login" required />
-            </label>
-            <label class="form__field field">
-              <input type="text" class="field__input" placeholder="password" name="password" required />
-            </label>
-            <a href="feed.html" class="field__submit">Подтвердить</a>
-          </div>
+
+          <form action="{{url_for('login') }}" method="post">
+            <div class="form__list">
+              <label class="form__field field">
+                <input type="text" class="field__input" placeholder="login" name="login" required />
+              </label>
+              <label class="form__field field">
+                <input type="text" class="field__input" placeholder="password" name="password" required />
+              </label>
+              <input type="submit" class="field__submit" value="Подтвердить">
+            </div>
+          </form>
+
         </div>
       </div>
     </div>
   </div>
+
+
 </body>
 
 </html>
