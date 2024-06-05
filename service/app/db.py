@@ -76,11 +76,10 @@ def abomination(abom_id, user_id):
 		cursor.close()
 		conn.close()
 		return False
-
 	conn.commit()
 	cursor.close()
 	conn.close()
-	return specific_abomination
+	return specific_abomination[0]
 
 
 def my_abominations(user_id):
@@ -94,12 +93,42 @@ def my_abominations(user_id):
 	return user_abominations
 
 
+def get_implant_name(bodypart, id):
+	conn = get_db_connection()
+	cursor = conn.cursor()
+	cursor.execute(f"SELECT name FROM implants where bodypart = '{bodypart}' and id = {id};")
+	name = cursor.fetchall()
+	conn.commit()
+	cursor.close()
+	conn.close()
+	return name[0][0]
+
+
+def get_implants():
+	conn = get_db_connection()
+	cursor = conn.cursor()
+	cursor.execute(f"SELECT * FROM implants where bodypart = 'head';")
+	head = cursor.fetchall()
+	cursor.execute(f"SELECT * FROM implants where bodypart = 'eye';")
+	eye = cursor.fetchall()
+	cursor.execute(f"SELECT * FROM implants where bodypart = 'body';")
+	body = cursor.fetchall()
+	cursor.execute(f"SELECT * FROM implants where bodypart = 'arm';")
+	arm = cursor.fetchall()
+	cursor.execute(f"SELECT * FROM implants where bodypart = 'leg';")
+	leg = cursor.fetchall()
+	conn.commit()
+	cursor.close()
+	conn.close()
+	return head, eye, body, arm, leg
+
+
 def create_abomination(id_owner, name, gender, is_private, head, eye, body, arm, leg):
 	conn = get_db_connection()
 	cursor = conn.cursor()
 	cursor.execute(f"INSERT INTO abominations"
 	               f"(id_owner, name, gender, is_private, head, eye, body, arm, leg) VALUES "
-	               f"({id_owner}, {name}, {gender}, {is_private}, {head}, {eye}, {body}, {arm}, {leg});")
+	               f"({id_owner}, '{name}', '{gender}', {is_private}, {head}, {eye}, {body}, {arm}, {leg});")
 	cursor.execute(f"SELECT id FROM abominations WHERE id_owner = {id_owner} ORDER BY id DESC LIMIT 1;")
 	new_abomination = cursor.fetchall()
 	conn.commit()

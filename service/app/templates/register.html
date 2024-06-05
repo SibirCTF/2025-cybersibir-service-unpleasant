@@ -4,8 +4,8 @@
   <div class="page-header__container">
     <nav class="page-header__nav">
 
-      <a href="../reg.html" class="reg">Зарегистрироваться</a>
-      <a href="../log.html" class="log">Войти</a>
+      <a href="register" class="reg">Зарегистрироваться</a>
+      <a href="login" class="log">Войти</a>
     </nav>
   </div>
 </header>
@@ -21,7 +21,7 @@
           <form action="{{url_for('register') }}" method="post">
             <div class="form__list">
               <label class="form__field field">
-                <input type="text" class="field__input" placeholder="login" name="login" required />
+                <input type="text" class="field__input" placeholder="username" name="username" required />
               </label>
               <label class="form__field field">
                 <input type="text" class="field__input" placeholder="password" name="password" required />

@@ -4,15 +4,15 @@
 <body class="body">
   <div class="create">
     <div class="page-header-create">
-      <link rel="stylesheet" href="styles/styles.min.css">
+      <link rel="stylesheet" href="static/styles/styles.min.css">
       <nav class="page-header__nav">
-        <a href="feed.html" class="page-header__nav-link feed">Feed</a>
-        <a href="index.html" class="page-header__nav-link exit">Выйти</a>
+        <a href="feed" class="page-header__nav-link feed">Feed</a>
+        <a href="logout" class="page-header__nav-link exit">Выйти</a>
       </nav>
     </div>
     <div class="create">
       <article class="create__words">
-        <a href="abomination.html" class="create__list link"></a>
+        <a href="abomination" class="create__list link"></a>
         <h2 class="words__title">Сделай сам и покажи всем!</h2>
         <h2 class="words__text">Или не показывай...</h2>
       </article>
@@ -20,7 +20,7 @@
 
       <div class="create__container">
 
-        <form action="{{ url_for('  ') }}" method="post" class="create__list">
+        <form action="{{ url_for('create_abomination') }}" method="post" class="create__list">
           <div class="create__list">
 
             <div class="create__field name">
@@ -36,53 +36,53 @@
             </div>
 
             <div class="create__field select">
-              <select name="part" class="create__select">
-                <option value="" disabled selected hidden>Head</option>
-                <option value="1">Придумай</option>
-                <option value="2">Придумай1</option>
-                <option value="3">Придумай2</option>
+              <select name="head" class="create__select">
+                <option value="head" disabled selected hidden>Head</option>
+                {% for head in heads %}
+                <option value="{{head[2]}}">{{head[1]}}</option>
+                {% endfor %}
               </select>
             </div>
 
             <div class="create__field select">
-              <select name="part" class="create__select">
-                <option value="" disabled selected hidden>Eye</option>
-                <option value="1">Придумай</option>
-                <option value="2">Придумай1</option>
-                <option value="3">Придумай2</option>
+              <select name="eye" class="create__select">
+                <option value="eye" disabled selected hidden>Eye</option>
+                {% for eye in eyes %}
+                <option value="{{eye[2]}}">{{eye[1]}}</option>
+                {% endfor %}
               </select>
             </div>
 
             <div class="create__field select">
-              <select name="part" class="create__select">
-                <option value="" disabled selected hidden>Body</option>
-                <option value="1">Придумай</option>
-                <option value="2">Придумай1</option>
-                <option value="3">Придумай2</option>
+              <select name="body" class="create__select">
+                <option value="body" disabled selected hidden>Body</option>
+                {% for body in bodies %}
+                <option value="{{body[2]}}">{{body[1]}}</option>
+                {% endfor %}
               </select>
             </div>
 
             <div class="create__field select">
-              <select name="part" class="create__select">
-                <option value="" disabled selected hidden>Arm</option>
-                <option value="1">Придумай</option>
-                <option value="2">Придумай1</option>
-                <option value="3">Придумай2</option>
+              <select name="arm" class="create__select">
+                <option value="arm" disabled selected hidden>Arm</option>
+                {% for arm in arms %}
+                <option value="{{arm[2]}}">{{arm[1]}}</option>
+                {% endfor %}
               </select>
             </div>
 
             <div class="create__field select">
-              <select name="part" class="create__select">
-                <option value="" disabled selected hidden>Leg</option>
-                <option value="1">Придумай</option>
-                <option value="2">Придумай1</option>
-                <option value="3">Придумай2</option>
+              <select name="leg" class="create__select">
+                <option value="leg" disabled selected hidden>Leg</option>
+                {% for leg in legs %}
+                <option value="{{leg[2]}}">{{leg[1]}}</option>
+                {% endfor %}
               </select>
             </div>
 
             <label class="create__check">
               <span class="check__label">Private</span>
-              <input type="checkbox" class="check__input" name="private" />
+              <input type="checkbox" class="check__input" name="is_private" value="True"/>
               <span class="check__mark"></span>
             </label>
             <input type="submit" class="create__submit" value="Создать">

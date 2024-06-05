@@ -48,8 +48,8 @@ def register():
 	username, password = request.form["username"], request.form["password"]
 	id = db.register_user(username, password)
 	if id is False:
-		return render_template("register.html", show_error=True)
-	resp = make_response(redirect("login.html"))
+		return render_template("register", show_error=True)
+	resp = make_response(redirect("login"))
 	return resp
 
 
@@ -63,30 +63,35 @@ def login():
 	username, password = request.form["username"], request.form["password"]
 	user_id = db.login_user(username, password)
 	if user_id is False:
-		return render_template("login.html", show_error=True)
-	resp = make_response(redirect("feed.html"))
+		return render_template("login", show_error=True)
+	resp = make_response(redirect("feed"))
 	resp.set_cookie("diy_session", generate_jwt(user_id))
 	return resp
 
 
 @app.route('/feed')
-def get_feed():  # TODO: render_template / jinja pattern?
+def get_feed():
 	id_owner = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
-	return db.feed(id_owner)
-	# return render_template("feed.html")
+	feed = db.feed(id_owner)
+	return render_template("feed.html", feed=feed)
 
 
 @app.route('/create_abomination')
 def get_create_abomination():
-	return render_template("create_abomination.html")
+	heads, eyes, bodies, arms, legs = db.get_implants()
+	return render_template("create_abomination.html", heads=heads, eyes=eyes, bodies=bodies, arms=arms, legs=legs)
 
 
 @app.route('/create_abomination', methods=["POST"])
 def create_abomination():
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	name, gender, is_private, head, eye, body, arm, leg = \
-		request.form["name"], request.form["gender"], request.form['is_private'], request.form['head'], \
+		str(request.form["name"]), str(request.form["gender"]), request.form.get('is_private'), request.form['head'], \
 		request.form['eye'], request.form['body'], request.form['arm'], request.form['leg']
+	if is_private:
+		is_private = True
+	else:
+		is_private = False
 	new_abomination = db.create_abomination(user_id, name, gender, is_private, head, eye, body, arm, leg)
 	resp = make_response(redirect(f"/abomination/{new_abomination}"))
 	return resp
@@ -98,15 +103,20 @@ def get_abomination(abom_id):
 	abomination = db.abomination(abom_id, user_id)
 	if abomination is False:
 		return '404'  # todo: 404
-	return abomination
-	# return render_template("abomination.html")  # todo: картинки?, render_template
+	head = db.get_implant_name('head', abomination[5])
+	eye = db.get_implant_name('eye', abomination[6])
+	body = db.get_implant_name('body', abomination[7])
+	arm = db.get_implant_name('arm', abomination[8])
+	leg = db.get_implant_name('leg', abomination[9])
+	detalized_abomination = (abomination[2], abomination[3], head, eye, body, arm, leg)
+	return render_template("abomination.html", abom=detalized_abomination)
 
 
 @app.route('/my_abominations')
 def get_my_abominations():
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
-	return db.my_abominations(user_id)
-	# return render_template("my_abominations.html")  # todo render
+	feed = db.my_abominations(user_id)
+	return render_template("my_abominations.html", feed=feed)  # todo test
 
 
 @app.route('/logout', methods=["GET"])
