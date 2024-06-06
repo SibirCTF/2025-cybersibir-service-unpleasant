@@ -64,7 +64,8 @@ def abomination(abom_id, user_id):
 		conn.close()
 		return False
 	id_owner = specific_abomination[0][1]
-	if user_id != id_owner:
+	is_private = specific_abomination[0][4]
+	if is_private and (user_id != id_owner):
 		conn.commit()
 		cursor.close()
 		conn.close()
