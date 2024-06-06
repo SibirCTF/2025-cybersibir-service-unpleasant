@@ -3,12 +3,6 @@ import json
 
 # TODO: sqlescape?
 
-# json_raw = """ {
-# 	"id"	: 12,
-# 	"name"	: name
-# } """
-# jsondata = json.loads(json_raw)
-
 
 def get_db_connection():
 	conn = psycopg2.connect(host='localhost',
@@ -69,7 +63,6 @@ def abomination(abom_id, user_id):
 		cursor.close()
 		conn.close()
 		return False
-	# todo: test
 	id_owner = specific_abomination[0][1]
 	if user_id != id_owner:
 		conn.commit()

@@ -1,11 +1,13 @@
-from flask import Flask, render_template, render_template_string, make_response, request, redirect
+from flask import Flask, render_template, render_template_string, make_response, request, redirect, flash
 import psycopg2
-import db, db_init
+import db
 import os
 import jwt
-
+# todo: delete_abomimation
+# todo: search function
+# todo: yaml upload
 app = Flask(__name__, template_folder="templates")
-jwt_key = os.urandom(64)  # datetime vuln? known seed
+jwt_key = "coursework2024"  # os.urandom(64)  # datetime vuln? known seed
 
 
 def generate_jwt(user_id):
@@ -33,6 +35,18 @@ def get_db():
 	return version
 
 
+@app.route('/users')
+def get_users():
+	conn = get_db_connection()
+	cur = conn.cursor()
+	cur.execute("SELECT id, username FROM users;")
+	users = cur.fetchall()
+	conn.commit()
+	cur.close()
+	conn.close()
+	return users
+
+
 @app.route('/')
 def get_index():
 	return render_template("index.html")
@@ -48,7 +62,7 @@ def register():
 	username, password = request.form["username"], request.form["password"]
 	id = db.register_user(username, password)
 	if id is False:
-		return render_template("register", show_error=True)
+		return render_template("register.html")
 	resp = make_response(redirect("login"))
 	return resp
 
@@ -102,7 +116,7 @@ def get_abomination(abom_id):
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	abomination = db.abomination(abom_id, user_id)
 	if abomination is False:
-		return '404'  # todo: 404
+		return 'NO'
 	head = db.get_implant_name('head', abomination[5])
 	eye = db.get_implant_name('eye', abomination[6])
 	body = db.get_implant_name('body', abomination[7])
@@ -116,7 +130,7 @@ def get_abomination(abom_id):
 def get_my_abominations():
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	feed = db.my_abominations(user_id)
-	return render_template("my_abominations.html", feed=feed)  # todo test
+	return render_template("my_abominations.html", feed=feed)
 
 
 @app.route('/logout', methods=["GET"])
