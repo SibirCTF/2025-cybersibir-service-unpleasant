@@ -42,7 +42,7 @@ def login_user(username, password):
 	return user[0][0]
 
 
-def feed(user_id):  # TODO: Test
+def feed(user_id):
 	conn = get_db_connection()
 	cursor = conn.cursor()
 	cursor.execute(f"SELECT * FROM abominations WHERE is_private = False OR id_owner = {user_id}")

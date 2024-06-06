@@ -7,6 +7,7 @@ import jwt
 # todo: search function
 # todo: yaml upload
 app = Flask(__name__, template_folder="templates")
+
 jwt_key = "coursework2024"  # os.urandom(64)  # datetime vuln? known seed
 
 
@@ -21,18 +22,6 @@ def get_db_connection():
 	                        user='postgres',
 	                        password='postgres')
 	return conn
-
-
-@app.route('/dbtest')  # TODO: Remove
-def get_db():
-	conn = get_db_connection()
-	cur = conn.cursor()
-	cur.execute("SELECT current_database()")
-	version = cur.fetchall()
-	conn.commit()
-	cur.close()
-	conn.close()
-	return version
 
 
 @app.route('/users')
