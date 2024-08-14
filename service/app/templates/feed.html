@@ -1,30 +1,18 @@
-<!DOCTYPE html>
-<html lang="ru">
-
-<body class="body">
-  <header class="page-header">
-    <link rel="stylesheet" href="static/styles/styles.min.css">
-    <div class="page-header__container">
-      <nav class="page-header__nav">
-        <a href="feed" class="page-header__nav-link feed">Feed</a>
-        <a href="my_abominations" class="page-header__nav-link abomin">Мои заметки</a>
-        <a href="create_abomination" class="page-header__nav-link comment">Создать заметку</a>
-        <a href="logout" class="page-header__nav-link exit">Выйти</a>
-      </nav>
-    </div>
-  </header>
-  <div class="main">
-    <h2 class="feed__title">Кто-то уже сделал это!</h2>
-    <div class="feed__abomination">
-      {% for item in feed %}
-      <div class="abomination__container" id="abomination__container">
+{% extends "index.html" %}
+{% block pagename %}
+    <a href="feed">FEED</a>
+    <a href="my_abominations">MY-ABOMINATIONS</a>
+    <a href="create_abomination">CREATE-ABOMINATION</a>
+    <a href="logout">LOGOUT</a>
+    <text>feed</text>
+{% endblock %}
+{% block funny_logo %} <h1>FEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED</h1> {% endblock %}
+{% block page_content %}
+<div class="feed_abomination">
+    {% for item in feed %}
+    <div class="abomination_container" id="abomination_container">
         <a href="abomination/{{item[0]}}">{{item[1]}}. {{item[2]}}</a>
-      </div>
-      {% endfor %}
     </div>
-  </div>
-
-
-</body>
-
-</html>
+    {% endfor %}
+</div>
+{% endblock %}

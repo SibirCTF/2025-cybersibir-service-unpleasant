@@ -1,23 +1,23 @@
 version: "3.1"
 services:
 
-    flaskapp:
-      container_name: flaskapp
+    unpleasant:
+      container_name: unpleasant
       image: myflaskapp:1.0.0
       build: .
       ports:
         - 5000:5000
       depends_on:
-        - flask_db
+        - unpleasant_db
 
 
-    flask_db:
-      container_name: flask_db
+    unpleasant_db:
+      container_name: unpleasant_db
       image: postgres:13
       environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: flask_test
+        POSTGRES_DB: unpleasant_db
       ports:
         - 5432:5432
       volumes:

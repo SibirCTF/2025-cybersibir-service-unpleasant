@@ -7,7 +7,7 @@ import json
 def get_db_connection():
 	conn = psycopg2.connect(host='localhost',
 	                        port=5432,
-	                        database='flask_test',  # TODO: database name
+	                        database='unpleasant_db',
 	                        user='postgres',
 	                        password='postgres')
 	return conn

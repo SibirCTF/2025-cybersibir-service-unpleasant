@@ -7,7 +7,7 @@ import jwt
 # todo: search function
 # todo: yaml upload
 app = Flask(__name__, template_folder="templates")
-
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 28800
 jwt_key = "coursework2024"  # os.urandom(64)  # datetime vuln? known seed
 
 
@@ -18,7 +18,7 @@ def generate_jwt(user_id):
 def get_db_connection():
 	conn = psycopg2.connect(host='localhost',
 	                        port=5432,
-	                        database='flask_test',  # TODO: database name
+	                        database='unpleasant_db',
 	                        user='postgres',
 	                        password='postgres')
 	return conn

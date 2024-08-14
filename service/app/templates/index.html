@@ -1,40 +1,23 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
+<head>
+    <link rel="stylesheet" href="static/styles/unpleasant.css">
+</head>
 
-<header class="page-header">
-  <div class="page-header__container">
-    <nav class="page-header__nav">
+<body>
+<div class="lincoln_navigator">
+    {% block pagename %}
+    <a href="/">MAIN</a>
+    <a href="register">REGISTER</a>
+    <a href="login">LOGIN</a>
+    <text>index</text>
+    {% endblock %}
+    <text>UNPLEASANT SERVICE</text>
+</div>
 
-      <a href="register" class="reg">Зарегистрироваться</a>
-      <a href="login" class="log">Войти</a>
-    </nav>
-  </div>
-</header>
-
-<body class="body">
-  <link rel="stylesheet" href="static/styles/styles.min.css">
-
-  <body class="body">
-    <main class="main">
-
-      <div class="header">
-        <h1 class="header__title">Добро пожаловать на сайт</h1>
-        <br>
-        <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet">
-        <h1 class="header__main">DIY 2024</h1>
-        <br>
-        <h2 class="header__text">Попробуй сделать сам!</h2>
-      </div>
-
-      <div class="about">
-        <div class="about__rectangle"></div>
-        <div class="about__rectangle1"></div>
-        <h2 class="about__text">Не бойтесь заявить миру о своих идеях</h2>
-      </div>
-
-      <div class="footer"></div>
-    </main>
-  </body>
+{% block funny_logo %}
+<h1>UNPLEASANT SERVICE</h1><h1>UNPLEASANT SERVICE</h1><h1>UNPLEASANT SERVICE</h1><h1>UNPLEASANT SERVICE</h1><h1>UNPLEASANT SERVICE</h1><h1>UNPLEASANT SERVICE</h1><h1>UNPLEASANT SERVICE</h1><h1>UNPLEASANT SERVICE</h1><h1>UNPLEASANT SERVICE</h1>
+{% endblock %}
+{% block page_content %}{% endblock %}
 </body>
-
 </html>
