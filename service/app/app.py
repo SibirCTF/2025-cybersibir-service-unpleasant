@@ -16,7 +16,7 @@ def generate_jwt(user_id):
 
 
 def get_db_connection():
-	conn = psycopg2.connect(host='localhost',
+	conn = psycopg2.connect(host='unpleasant_db',
 	                        port=5432,
 	                        database='unpleasant_db',
 	                        user='postgres',
@@ -24,7 +24,7 @@ def get_db_connection():
 	return conn
 
 
-@app.route('/users')
+@app.route('/users') # TODO: -> to db.py #wtf is this?
 def get_users():
 	conn = get_db_connection()
 	cur = conn.cursor()

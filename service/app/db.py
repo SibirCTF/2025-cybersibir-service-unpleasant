@@ -5,7 +5,7 @@ import json
 
 
 def get_db_connection():
-	conn = psycopg2.connect(host='localhost',
+	conn = psycopg2.connect(host='unpleasant_db',
 	                        port=5432,
 	                        database='unpleasant_db',
 	                        user='postgres',

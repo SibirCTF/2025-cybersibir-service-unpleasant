@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 # create_db
-conn = psycopg2.connect(host='localhost',
+conn = psycopg2.connect(host='unpleasant_db',
                         port=5432,
                         user='postgres',
                         password='postgres')
@@ -18,7 +18,7 @@ cursor.close()
 conn.close()
 
 # create_tables
-conn = psycopg2.connect(host='localhost',
+conn = psycopg2.connect(host='unpleasant_db',
                         port=5432,
                         database='unpleasant_db',
                         user='postgres',
