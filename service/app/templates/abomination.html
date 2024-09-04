@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="static/styles/unpleasant.css">
+    <link rel="stylesheet" href="../static/styles/unpleasant.css">
 </head>
 {% extends "index.html" %}
 {% block pagename %}
@@ -11,12 +11,11 @@
 {% endblock %}
 {% block funny_logo %} <h1>{{abom[0]}}</h1> {% endblock %}
 {% block page_content %}
-<div class="abomination_container">
     <p>gender:  {{abom[1]}}</p>
     <p>  head:  {{abom[2]}}</p>
     <p>   eye:  {{abom[3]}}</p>
     <p>  body:  {{abom[4]}}</p>
     <p>   arm:  {{abom[5]}}</p>
     <p>   leg:  {{abom[6]}}</p>
-</div>
+
 {% endblock %}
