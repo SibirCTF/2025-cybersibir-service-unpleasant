@@ -1,19 +1,18 @@
 version: "3.1"
 services:
 
-    unpleasant:
-      container_name: unpleasant
-      image: myflaskapp:1.0.0
+    unpleasant_service:
+      container_name: unpleasant_service
       build: .
       ports:
         - 5000:5000
       depends_on:
         - unpleasant_db
 
-
     unpleasant_db:
       container_name: unpleasant_db
       image: postgres:13
+      restart: always
       environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
@@ -21,6 +20,7 @@ services:
       ports:
         - 5432:5432
       volumes:
+        - ./app/init.sql:/docker-entrypoint-initdb.d/init.sql
         - pgdata:/var/lib/postgresql/data
 
 volumes:

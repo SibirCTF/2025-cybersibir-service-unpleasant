@@ -3,6 +3,7 @@ import psycopg2
 import db
 import os
 import jwt
+from config import Config
 # todo: delete_abomimation
 # todo: search function
 # todo: yaml upload
@@ -16,7 +17,7 @@ def generate_jwt(user_id):
 
 
 def get_db_connection():
-	conn = psycopg2.connect(host='unpleasant_db',
+	conn = psycopg2.connect(host=Config.DB_HOST,
 	                        port=5432,
 	                        database='unpleasant_db',
 	                        user='postgres',

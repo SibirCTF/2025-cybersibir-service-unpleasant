@@ -1,11 +1,11 @@
 import psycopg2
 import json
-
+from config import Config
 # TODO: sqlescape?
 
 
 def get_db_connection():
-	conn = psycopg2.connect(host='unpleasant_db',
+	conn = psycopg2.connect(host=Config.DB_HOST,  # unpleasant_db
 	                        port=5432,
 	                        database='unpleasant_db',
 	                        user='postgres',
