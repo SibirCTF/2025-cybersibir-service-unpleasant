@@ -8,9 +8,11 @@
 {% endblock %}
 {% block funny_logo %} <h1>FEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED</h1> {% endblock %}
 {% block page_content %}
-<ol>
-    {% for item in feed %}
-        <li><a href="abomination/{{item[0]}}">{{item[2]}}</a></li>
-    {% endfor %}
-</ol>
+<div class="custom_links">
+    <ol>
+        {% for item in feed %}
+            <li><a href="abomination/{{item[0]}}">{{item[2]}}</a></li>
+        {% endfor %}
+    </ol>
+</div>
 {% endblock %}

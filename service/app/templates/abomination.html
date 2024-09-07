@@ -11,11 +11,12 @@
 {% endblock %}
 {% block funny_logo %} <h1>{{abom[0]}}</h1> {% endblock %}
 {% block page_content %}
-    <p>gender:  {{abom[1]}}</p>
-    <p>  head:  {{abom[2]}}</p>
-    <p>   eye:  {{abom[3]}}</p>
-    <p>  body:  {{abom[4]}}</p>
-    <p>   arm:  {{abom[5]}}</p>
-    <p>   leg:  {{abom[6]}}</p>
-
+<div class="abomination">
+    <p>gender:  {{abom[1]}} </p>
+    <p>  head:  {{abom[2]}} <img src="../static/images/head/{{pic[0]}}.jpg"></p>
+    <p>   eye:  {{abom[3]}} <img src="../static/images/eye/{{pic[1]}}.gif"></p>
+    <p>  body:  {{abom[4]}} <img src="../static/images/body/{{pic[2]}}.jpg"></p>
+    <p>   arm:  {{abom[5]}} <img src="../static/images/arm/{{pic[3]}}.jpg"></p>
+    <p>   leg:  {{abom[6]}} <img src="../static/images/leg/{{pic[4]}}.jpg"></p>
+</div>
 {% endblock %}

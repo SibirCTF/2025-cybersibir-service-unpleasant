@@ -113,7 +113,8 @@ def get_abomination(abom_id):
 	arm = db.get_implant_name('arm', abomination[8])
 	leg = db.get_implant_name('leg', abomination[9])
 	detalized_abomination = (abomination[2], abomination[3], head, eye, body, arm, leg)
-	return render_template("abomination.html", abom=detalized_abomination)
+	pic = (abomination[5], abomination[6], abomination[7], abomination[8], abomination[9])
+	return render_template("abomination.html", abom=detalized_abomination, pic=pic)
 
 
 @app.route('/my_abominations')
