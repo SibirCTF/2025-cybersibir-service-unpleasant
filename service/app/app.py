@@ -52,7 +52,7 @@ def register():
 	username, password = request.form["username"], request.form["password"]
 	id = db.register_user(username, password)
 	if id is False:
-		return render_template("register.html")
+		return render_template("register.html")  # todo: user already registered
 	resp = make_response(redirect("login"))
 	return resp
 
@@ -67,7 +67,7 @@ def login():
 	username, password = request.form["username"], request.form["password"]
 	user_id = db.login_user(username, password)
 	if user_id is False:
-		return render_template("login", show_error=True)
+		return render_template("login", show_error=True)  # todo: wrong password
 	resp = make_response(redirect("feed"))
 	resp.set_cookie("diy_session", generate_jwt(user_id))
 	return resp
