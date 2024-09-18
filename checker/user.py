@@ -11,7 +11,8 @@ class User:
     username: str
     password: str
     abom_name: str
-    abom_gender: str  # flag
+    abom_gender: str
+    abom_private_gender: str  # flag
     abom_head: int
     abom_eye: int
     abom_body: int
@@ -35,7 +36,8 @@ def generate_user(flag: str, flag_id: str, private: bool) -> User:
         username=username,
         password=password,
         abom_name="str",  # TODO: FAKER / RANDOMIZE NAMES
-        abom_gender=flag,  # flag
+        abom_gender=genders[random.randint(0, len(genders))],
+        abom_private_gender=flag,  # flag
         abom_head=random.randint(1, MAX_IMPLANTS),
         abom_eye=random.randint(1, MAX_IMPLANTS),
         abom_body=random.randint(1, MAX_IMPLANTS),
