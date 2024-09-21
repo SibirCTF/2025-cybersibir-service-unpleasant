@@ -103,10 +103,7 @@ class Names:
 		"Stellar Voyager",
 		"ChronoBot",
 		"Laser Hawk",
-		"Neon Sentinel"
-	]
-
-	cyberpunk_cyborg_names = [
+		"Neon Sentinel",
 		"Neuromancer",  # Отсылка к роману Уильяма Гибсона
 		"Deckard",  # Персонаж из "Бегущего по лезвию"
 		"Rachael",  # Также из "Бегущего по лезвию"
@@ -138,11 +135,7 @@ class Names:
 		"Vortex",  # Ссылка на различные произведения
 		"Cipher",  # Отсылка к шифрам и хакерам
 		"Riftwalker",  # Ссылка на путешествия между мирами
-		"Neon Demon"  # Отсылка к фильму
-	]
-
-	cyberpunk_characters = [
-		"V",  # Cyberpunk 2077
+		"Neon Demon",  # Отсылка к фильму
 		"Johnny Silverhand",  # Cyberpunk 2077
 		"Adam Jensen",  # Deus Ex (серия)
 		"Pritchard",  # Deus Ex: Human Revolution

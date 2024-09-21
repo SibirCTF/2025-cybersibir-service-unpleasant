@@ -2,6 +2,7 @@ import random
 import faker
 import dataclasses
 import hashlib
+from names import Names
 
 MAX_IMPLANTS = 3
 
@@ -26,7 +27,7 @@ def hash_int(string: str) -> int:
 
 
 def gen_username(flag_id: str) -> str:
-    return f"user#{str(hash_int('username' + flag_id))[:16]}"
+    return f"user{str(hash_int('username' + flag_id))[:16]}"  # add #
 
 
 def generate_user(flag: str, flag_id: str, private: bool) -> User:
@@ -35,8 +36,8 @@ def generate_user(flag: str, flag_id: str, private: bool) -> User:
     user = User(
         username=username,
         password=password,
-        abom_name="str",  # TODO: FAKER / RANDOMIZE NAMES
-        abom_gender=genders[random.randint(0, len(genders))],
+        abom_name=Names.names[random.randint(0, len(Names.names))],
+        abom_gender=Names.genders[random.randint(0, len(Names.genders))],
         abom_private_gender=flag,  # flag
         abom_head=random.randint(1, MAX_IMPLANTS),
         abom_eye=random.randint(1, MAX_IMPLANTS),

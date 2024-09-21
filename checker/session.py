@@ -51,6 +51,7 @@ class Session:
             "password": self.user.password,
         }
         r = self.session.post(f"{self.base_url}/login", data=body, timeout=self.timeout)
+        r.raise_for_status()
 
         # TODO: errors
         # if r.status_code != 400 or r.json() != {
@@ -73,6 +74,7 @@ class Session:
             "leg": user.abom_leg
         }
         r = self.session.post(f"{self.base_url}/login", data=body, timeout=self.timeout)
+        r.raise_for_status()
         # TODO: http code error
 
         ...
@@ -90,6 +92,7 @@ class Session:
             "is_private": user.private
         }
         r = self.session.post(f"{self.base_url}/create_abomination", data=body, timeout=self.timeout)
+        r.raise_for_status()
         # TODO: http code error
 
         ...
@@ -97,12 +100,14 @@ class Session:
     def check_public(self, abom_id: int):
         """ checks public abomination for accessibility and info """
         r = self.session.post(f"{self.base_url}/abomination/{abom_id}", timeout=self.timeout)
+        r.raise_for_status()
         # TODO: http code error
         ...
 
     def check_private(self, abom_id: int):
         """ checks private abomination for accessibility and FLAG """
         r = self.session.post(f"{self.base_url}/abomination/{abom_id}", timeout=self.timeout)
+        r.raise_for_status()
         # TODO: http code error
         ...
 
