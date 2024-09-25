@@ -4,7 +4,6 @@ import db
 import os
 import jwt
 from config import Config
-# todo: delete_abomimation
 # todo: search function
 # todo: yaml upload
 app = Flask(__name__, template_folder="templates")
@@ -25,26 +24,14 @@ def get_db_connection():
 	return conn
 
 
-@app.route('/users') # TODO: -> to db.py #wtf is this?
-def get_users():
-	conn = get_db_connection()
-	cur = conn.cursor()
-	cur.execute("SELECT id, username FROM users;")
-	users = cur.fetchall()
-	conn.commit()
-	cur.close()
-	conn.close()
-	return users
-
-
 @app.route('/')
 def get_index():
-	return render_template("index.html")
+	return render_template("index.html"), 200
 
 
 @app.route('/register')
 def get_register():
-	return render_template("register.html")
+	return render_template("register.html"), 200
 
 
 @app.route('/register', methods=["POST"])
@@ -52,14 +39,14 @@ def register():
 	username, password = request.form["username"], request.form["password"]
 	id = db.register_user(username, password)
 	if id is False:
-		return render_template("register.html")  # todo: user already registered
+		return render_template("register.html"), 400
 	resp = make_response(redirect("login"))
-	return resp
+	return resp, 200
 
 
 @app.route('/login')
 def get_login():
-	return render_template("login.html")
+	return render_template("login.html"), 200
 
 
 @app.route('/login', methods=["POST"])
@@ -67,23 +54,23 @@ def login():
 	username, password = request.form["username"], request.form["password"]
 	user_id = db.login_user(username, password)
 	if user_id is False:
-		return render_template("login", show_error=True)  # todo: wrong password
+		return render_template("login", show_error=True), 413
 	resp = make_response(redirect("feed"))
 	resp.set_cookie("diy_session", generate_jwt(user_id))
-	return resp
+	return resp, 200
 
 
 @app.route('/feed')
 def get_feed():
 	id_owner = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	feed = db.feed(id_owner)
-	return render_template("feed.html", feed=feed)
+	return render_template("feed.html", feed=feed), 200
 
 
 @app.route('/create_abomination')
 def get_create_abomination():
 	heads, eyes, bodies, arms, legs = db.get_implants()
-	return render_template("create_abomination.html", heads=heads, eyes=eyes, bodies=bodies, arms=arms, legs=legs)
+	return render_template("create_abomination.html", heads=heads, eyes=eyes, bodies=bodies, arms=arms, legs=legs), 200
 
 
 @app.route('/create_abomination', methods=["POST"])
@@ -98,7 +85,7 @@ def create_abomination():
 		is_private = False
 	new_abomination = db.create_abomination(user_id, name, gender, is_private, head, eye, body, arm, leg)
 	resp = make_response(redirect(f"/abomination/{new_abomination}"))
-	return resp
+	return resp, 200
 
 
 @app.route('/abomination/<int:abom_id>')
@@ -106,7 +93,7 @@ def get_abomination(abom_id):
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	abomination = db.abomination(abom_id, user_id)
 	if abomination is False:
-		return 'NO'
+		return 'NO', 404
 	head = db.get_implant_name('head', abomination[5])
 	eye = db.get_implant_name('eye', abomination[6])
 	body = db.get_implant_name('body', abomination[7])
@@ -114,21 +101,21 @@ def get_abomination(abom_id):
 	leg = db.get_implant_name('leg', abomination[9])
 	detalized_abomination = (abomination[2], abomination[3], head, eye, body, arm, leg)
 	pic = (abomination[5], abomination[6], abomination[7], abomination[8], abomination[9])
-	return render_template("abomination.html", abom=detalized_abomination, pic=pic)
+	return render_template("abomination.html", abom=detalized_abomination, pic=pic), 200
 
 
 @app.route('/my_abominations')
 def get_my_abominations():
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	feed = db.my_abominations(user_id)
-	return render_template("my_abominations.html", feed=feed)
+	return render_template("my_abominations.html", feed=feed), 200
 
 
 @app.route('/logout', methods=["GET"])
 def logout():
 	resp = make_response(redirect('/'))
 	resp.delete_cookie("diy_session")
-	return resp
+	return resp, 200
 
 
 if __name__ == '__main__':

@@ -17,14 +17,34 @@ class StatusCode(IntEnum):
 
 
 def put(host: str, flag_id: str, flag: str):
-    ...
+    user1 = generate_user(flag, flag_id, True)
+    ses = Session(host, user1)
+    ses.register_user()
+    ses.login_user()
+    ses.create_private()
+    ses.create_public()
+    ses.logout()
+
+    return StatusCode.OK
 
 
 def check(host: str, flag_id: str, flag: str):
-    ...
+    user1 = generate_user(flag, flag_id, True)
+    ses = Session(host, user1)
+    ses.login_user()
+    # todo: abom_ids
+    # ses.check_public()
+    # ses.check_private()
+    ses.logout()
+
+    return StatusCode.OK
 
 
 def handler(host: str, command, flag_id: str, flag: str):
+    if not ping(host):
+        local_logger.info("host is not answering")
+        exit(StatusCode.DOWN)
+
     if command == PUT_COMMAND:
         put(host, flag_id, flag)
 

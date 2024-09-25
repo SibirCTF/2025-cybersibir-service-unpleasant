@@ -53,13 +53,10 @@ class Session:
         r = self.session.post(f"{self.base_url}/login", data=body, timeout=self.timeout)
         r.raise_for_status()
 
-        # TODO: errors
-        # if r.status_code != 400 or r.json() != {
-        #     "detail": f"User {user.username} already registered"
-        # }:
-        #     r.raise_for_status()
-        # else:
-        #     pass
+        if r.status_code == 400:
+            r.raise_for_status()
+        else:
+            pass
         ...
 
     def create_public(self):
@@ -110,6 +107,11 @@ class Session:
         r.raise_for_status()
         # TODO: http code error
         ...
+
+    def logout(self):
+        """logout"""
+        r = self.session.get(f"{self.base_url}/logout", timeout=self.timeout)
+        r.raise_for_status()
 
 
 user = generate_user('123', '123', True)
