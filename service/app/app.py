@@ -4,8 +4,11 @@ import db
 import os
 import jwt
 from config import Config
-# todo: search function
+# todo: search function?
+# todo: delete function?
+# todo: ssti
 # todo: yaml upload
+# todo: api ?
 app = Flask(__name__, template_folder="templates")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 28800
 jwt_key = "coursework2024"  # os.urandom(64)  # datetime vuln? known seed
@@ -41,7 +44,7 @@ def register():
 	if id is False:
 		return render_template("register.html"), 400
 	resp = make_response(redirect("login"))
-	return resp, 200
+	return resp
 
 
 @app.route('/login')
@@ -57,7 +60,7 @@ def login():
 		return render_template("login", show_error=True), 413
 	resp = make_response(redirect("feed"))
 	resp.set_cookie("diy_session", generate_jwt(user_id))
-	return resp, 200
+	return resp
 
 
 @app.route('/feed')
@@ -85,7 +88,7 @@ def create_abomination():
 		is_private = False
 	new_abomination = db.create_abomination(user_id, name, gender, is_private, head, eye, body, arm, leg)
 	resp = make_response(redirect(f"/abomination/{new_abomination}"))
-	return resp, 200
+	return resp
 
 
 @app.route('/abomination/<int:abom_id>')
@@ -115,7 +118,7 @@ def get_my_abominations():
 def logout():
 	resp = make_response(redirect('/'))
 	resp.delete_cookie("diy_session")
-	return resp, 200
+	return resp
 
 
 if __name__ == '__main__':
