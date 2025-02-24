@@ -22,8 +22,8 @@ def put(host: str, flag_id: str, flag: str):
     ses = Session(host, user1)
     ses.register_user()
     ses.login_user()
-    ses.create_private()
     ses.create_public()
+    ses.create_private()
     ses.logout()
 
     return StatusCode.OK
@@ -33,7 +33,7 @@ def check(host: str, flag_id: str, flag: str):
     user1 = generate_user(flag, flag_id, True)
     ses = Session(host, user1)
     ses.login_user()
-    # todo: abom_ids
+    ses.check_abominations(flag)
     # ses.check_public()
     # ses.check_private()
     ses.logout()

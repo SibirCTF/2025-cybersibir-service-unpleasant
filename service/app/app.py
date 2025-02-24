@@ -96,7 +96,7 @@ def get_abomination(abom_id):
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	abomination = db.abomination(abom_id, user_id)
 	if abomination is False:
-		return 'NO', 404
+		return 'anti-piracy ascii art', 404
 	head = db.get_implant_name('head', abomination[5])
 	eye = db.get_implant_name('eye', abomination[6])
 	body = db.get_implant_name('body', abomination[7])
@@ -107,11 +107,33 @@ def get_abomination(abom_id):
 	return render_template("abomination.html", abom=detalized_abomination, pic=pic), 200
 
 
+@app.route('/api/abomination/<int:abom_id>')
+def api_get_abomination(abom_id):
+	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
+	abomination = db.abomination(abom_id, user_id)
+	if abomination is False:
+		return 'anti-piracy ascii art', 404
+	head = db.get_implant_name('head', abomination[5])
+	eye = db.get_implant_name('eye', abomination[6])
+	body = db.get_implant_name('body', abomination[7])
+	arm = db.get_implant_name('arm', abomination[8])
+	leg = db.get_implant_name('leg', abomination[9])
+	detalized_abomination = (abomination[2], abomination[3], head, eye, body, arm, leg)
+	return list(detalized_abomination), 200
+
+
 @app.route('/my_abominations')
 def get_my_abominations():
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	feed = db.my_abominations(user_id)
 	return render_template("my_abominations.html", feed=feed), 200
+
+
+@app.route('/api/my_abominations')
+def api_my_abominations():
+	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
+	feed = db.my_abominations(user_id)
+	return feed, 200
 
 
 @app.route('/logout', methods=["GET"])

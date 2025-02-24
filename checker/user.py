@@ -27,7 +27,7 @@ def hash_int(string: str) -> int:
 
 
 def gen_username(flag_id: str) -> str:
-    return f"user{str(hash_int('username' + flag_id))[:16]}"  # add #
+    return f"user{str(hash_int('username' + flag_id))[:8]}"  # add #
 
 
 def generate_user(flag: str, flag_id: str, private: bool) -> User:
