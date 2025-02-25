@@ -8,7 +8,6 @@ from config import Config
 # todo: delete function?
 # todo: ssti
 # todo: yaml upload
-# todo: api ?
 app = Flask(__name__, template_folder="templates")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 28800
 jwt_key = "coursework2024"  # os.urandom(64)  # datetime vuln? known seed

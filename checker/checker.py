@@ -1,10 +1,17 @@
-import requests
+#!/usr/bin/env python3
+
+import logging
 import os
 import argparse
 from enum import IntEnum
 from session import *
 from user import *
-# TODO: status checks
+
+
+logging.basicConfig(
+    format="%(asctime)s [%(name)s] %(levelname)s: %(message)s", level=logging.INFO
+)
+logger = logging.getLogger("UNPLEASANT Checker")
 
 PUT_COMMAND = "put"
 CHECK_COMMAND = "check"
@@ -46,18 +53,20 @@ def ping(host) -> bool:
 
 
 def handler(host: str, command, flag_id: str, flag: str):
+    local_logger.info("checker started")
+
     if not ping(host):
-        # local_logger.info("host is not answering")
+        local_logger.info("host is not answering")
         exit(StatusCode.DOWN)
 
     if command == PUT_COMMAND:
         status_code = put(host, flag_id, flag)
-        # local_logger.info("put command has ended with %d status code", status_code)
+        local_logger.info("put command has ended with %d status code", status_code)
         exit(status_code)
 
     if command == CHECK_COMMAND:
         status_code = check(host, flag_id, flag)
-        # local_logger.info("check command has ended with %d status code", status_code)
+        local_logger.info("check command has ended with %d status code", status_code)
         exit(status_code)
 
     exit(StatusCode.MUMBLE)
@@ -71,6 +80,8 @@ if __name__ == "__main__":
     parser.add_argument("flag")
     args = parser.parse_args()
 
+    local_logger = logger.getChild(args.host)
+
     try:
         handler(
                 host=args.host,
@@ -80,21 +91,21 @@ if __name__ == "__main__":
             )
 
     except requests.exceptions.Timeout:
-        # local_logger.error("Timeout exception")
+        local_logger.error("TIMEOUT TIMEOUT")
         exit(StatusCode.MUMBLE)
 
     except requests.exceptions.ConnectionError:
-        # local_logger.error("ConnectionError to host. Seems that it isn't work")
+        local_logger.error("CONNECTION ERROR CONNECTION ERROR")
         exit(StatusCode.DOWN)
 
     except requests.exceptions.HTTPError as exc:
-        # local_logger.error("Service returned error status code %r", exc)
+        local_logger.error("HTTP ERROR: %r", exc)
         exit(StatusCode.CORRUPT)
 
     except FlagProblem as exc:
-        # local_logger.error("Flag is not found! %r", exc)
+        local_logger.error("FLAG PROBLEM: %r", exc)
         exit(StatusCode.CORRUPT)
 
     except Exception as exc:
-        # local_logger.error("Everything is bad :c %r", exc, exc_info=True)
+        local_logger.error("BAD HAPPENED BAD HAPPENED: %r", exc, exc_info=True)
         exit(StatusCode.CORRUPT)

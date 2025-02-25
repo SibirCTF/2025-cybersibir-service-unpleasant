@@ -1,8 +1,11 @@
-import random
+#!/usr/bin/env python3
 
+import logging
 import requests
 from user import *
 from exceptions import FlagProblem
+
+logger = logging.getLogger("UNPLEASANT Checker")
 
 
 class Session:
@@ -18,6 +21,7 @@ class Session:
         self.user = user
         r = self.session.get(f"{self.base_url}", timeout=self.timeout)
         r.raise_for_status()
+        self.logger = logger.getChild(host)
 
     def register_user(self):
         """ nuff said """
@@ -28,11 +32,14 @@ class Session:
         }
         r = requests.post(f"{self.base_url}/register", data=body, timeout=self.timeout)
 
-        # don't raise on existed user  # TODO: errors in api
+        class_logger = logger.getChild(self.base_url)
+
+        # don't raise on existed user
         if r.status_code != 400:
             r.raise_for_status()
+            class_logger.info("%s is registered", self.user.username)
         else:
-            pass
+            class_logger.info("%s is already exists", self.user.username)
 
     def login_user(self):
         """ nuff said """
@@ -47,7 +54,6 @@ class Session:
             r.raise_for_status()
         else:
             pass
-        ...
 
     def create_abomination(self, flag=None):
         """ checks privacy paramether """
@@ -69,6 +75,11 @@ class Session:
 
         r = self.session.post(f"{self.base_url}/create_abomination", data=body, timeout=self.timeout)
         r.raise_for_status()
+        # self.logger.info(
+        #     "'%s' post was published by %s",
+        #     title,
+        #     self.current_user.username,
+        # )
 
     def check_abomination(self, abom_id: int, flag=None):
         """ checks private post for accessibility and FLAG if provided """
@@ -78,8 +89,6 @@ class Session:
         if flag is not None:  # sorry
             if flag != r.json()[1]:
                 raise FlagProblem("Flag is not found in post profile")
-
-        # TODO: http code error
 
     def check_my_abominations(self, flag):
         """ gets'n'checks created posts """
@@ -99,10 +108,11 @@ class Session:
 user = generate_user(str(random.randint(1, 1000)))
 ses = Session('127.0.0.1', user)
 flag = 'penis123'
+hui = '324'
 
 ses.register_user()
 ses.login_user()
 ses.create_abomination()
 ses.create_abomination(flag)
 
-ses.check_my_abominations(flag)
+ses.check_my_abominations(hui)
