@@ -18,24 +18,22 @@ class StatusCode(IntEnum):
 
 
 def put(host: str, flag_id: str, flag: str):
-    user1 = generate_user(flag, flag_id, True)
+    user1 = generate_user(flag_id)
     ses = Session(host, user1)
     ses.register_user()
     ses.login_user()
-    ses.create_public()
-    ses.create_private()
+    ses.create_abomination()
+    ses.create_abomination(flag)
     ses.logout()
 
     return StatusCode.OK
 
 
 def check(host: str, flag_id: str, flag: str):
-    user1 = generate_user(flag, flag_id, True)
+    user1 = generate_user(flag_id)
     ses = Session(host, user1)
     ses.login_user()
-    ses.check_abominations(flag)
-    # ses.check_public()
-    # ses.check_private()
+    ses.check_my_abominations(flag)
     ses.logout()
 
     return StatusCode.OK
@@ -61,6 +59,8 @@ def handler(host: str, command, flag_id: str, flag: str):
         status_code = check(host, flag_id, flag)
         # local_logger.info("check command has ended with %d status code", status_code)
         exit(status_code)
+
+    exit(StatusCode.MUMBLE)
 
 
 if __name__ == "__main__":
@@ -91,14 +91,8 @@ if __name__ == "__main__":
         # local_logger.error("Service returned error status code %r", exc)
         exit(StatusCode.CORRUPT)
 
-    except FlagNotFoundException as exc:
+    except FlagProblem as exc:
         # local_logger.error("Flag is not found! %r", exc)
-        exit(StatusCode.CORRUPT)
-
-    except DataIsCorrupt as exc:
-        # local_logger.error(
-        #     "Some required data that put before is not found now! %r", exc
-        # )
         exit(StatusCode.CORRUPT)
 
     except Exception as exc:

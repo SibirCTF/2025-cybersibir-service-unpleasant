@@ -2,6 +2,7 @@ import random
 
 import requests
 from user import *
+from exceptions import FlagProblem
 
 
 class Session:
@@ -48,66 +49,45 @@ class Session:
             pass
         ...
 
-    def create_public(self): # TODO: generate new values everytime
-        """ creates public abomination, leaves no flag """
+    def create_abomination(self, flag=None):
+        """ checks privacy paramether """
+        a_name, a_gender, a_head, a_eye, a_body, a_arm, a_leg = generate_abomination()
         body = {
-            "name": self.user.abom_name,
-            "gender": self.user.abom_gender,
-            "head": self.user.abom_head,
-            "eye": self.user.abom_eye,
-            "body": self.user.abom_body,
-            "arm": self.user.abom_arm,
-            "leg": self.user.abom_leg
+            "name": a_name,
+            "gender": a_gender,
+            "head": a_head,
+            "eye": a_eye,
+            "body": a_body,
+            "arm": a_arm,
+            "leg": a_leg
         }
+        if flag is not None:
+            body.update({"is_private": True,
+                         "gender": flag})
+        else:
+            body.update({"gender": a_gender})
+
         r = self.session.post(f"{self.base_url}/create_abomination", data=body, timeout=self.timeout)
         r.raise_for_status()
-        # TODO: http code error
 
-        ...
-
-    def create_private(self):
-        """ creates private abomination, FLAG HERE !!!"""
-        body = {
-            "name": self.user.abom_name,
-            "gender": self.user.abom_private_gender,
-            "head": self.user.abom_head,
-            "eye": self.user.abom_eye,
-            "body": self.user.abom_body,
-            "arm": self.user.abom_arm,
-            "leg": self.user.abom_leg,
-            "is_private": self.user.private
-        }
-        r = self.session.post(f"{self.base_url}/create_abomination", data=body, timeout=self.timeout)
-        r.raise_for_status()
-        # TODO: http code error
-
-        ...
-
-    def check_public(self, abom_id: int):
-        """ checks public abomination for accessibility and info """
+    def check_abomination(self, abom_id: int, flag=None):
+        """ checks private post for accessibility and FLAG if provided """
         r = self.session.get(f"{self.base_url}/api/abomination/{abom_id}", timeout=self.timeout)
         r.raise_for_status()
         print(r.json())
-        # TODO: http code error
-        ...
-
-    def check_private(self, abom_id: int, flag):
-        """ checks private abomination for accessibility and FLAG """
-        r = self.session.get(f"{self.base_url}/api/abomination/{abom_id}", timeout=self.timeout)
-        r.raise_for_status()
-        print(r.json())
-        if flag != r.json()[1]:
-            raise Exception("Flag is not found in post profile")
+        if flag is not None:  # sorry
+            if flag != r.json()[1]:
+                raise FlagProblem("Flag is not found in post profile")
 
         # TODO: http code error
-        ...
 
-    def check_abominations(self, flag):
+    def check_my_abominations(self, flag):
+        """ gets'n'checks created posts """
         r = self.session.get(f"{self.base_url}/api/my_abominations", timeout=self.timeout)
         r.raise_for_status()
         abom_ids = [abom[0] for abom in r.json()]  # Consider there are 2 ids: 1. public; 2. private
-        self.check_public(abom_ids[0])
-        self.check_private(abom_ids[1], flag)
+        self.check_abomination(abom_ids[0])
+        self.check_abomination(abom_ids[1], flag)
 
     def logout(self):
         """logout"""
@@ -115,12 +95,14 @@ class Session:
         r.raise_for_status()
 
 
-user = generate_user('FLAGFLAGFLAG', str(random.randint(1, 1000)), True)
+# __ TEST ZONE __
+user = generate_user(str(random.randint(1, 1000)))
 ses = Session('127.0.0.1', user)
+flag = 'penis123'
 
 ses.register_user()
 ses.login_user()
-ses.create_public()
-ses.create_private()
+ses.create_abomination()
+ses.create_abomination(flag)
 
-ses.check_abominations('penis')
+ses.check_my_abominations(flag)
