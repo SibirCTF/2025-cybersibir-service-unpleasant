@@ -4,13 +4,11 @@ import db
 import os
 import jwt
 from config import Config
-# todo: search function?
-# todo: delete function?
 # todo: ssti
-# todo: yaml upload
 app = Flask(__name__, template_folder="templates")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 28800
-jwt_key = "coursework2024"  # os.urandom(64)  # datetime vuln? known seed
+with open('app/static/key.txt') as keyfile:
+	jwt_key = keyfile.read().replace('\n', '')
 
 
 def generate_jwt(user_id):
@@ -41,7 +39,8 @@ def register():
 	username, password = request.form["username"], request.form["password"]
 	id = db.register_user(username, password)
 	if id is False:
-		return render_template("register.html"), 400
+		error = f'Error: bad login'
+		return render_template("register.html", error=error), 400
 	resp = make_response(redirect("login"))
 	return resp
 
@@ -56,7 +55,8 @@ def login():
 	username, password = request.form["username"], request.form["password"]
 	user_id = db.login_user(username, password)
 	if user_id is False:
-		return render_template("login", show_error=True), 413
+		error = f'Error: invalid credentials'
+		return render_template("login.html", error=error), 400
 	resp = make_response(redirect("feed"))
 	resp.set_cookie("diy_session", generate_jwt(user_id))
 	return resp
@@ -111,7 +111,7 @@ def api_get_abomination(abom_id):
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	abomination = db.abomination(abom_id, user_id)
 	if abomination is False:
-		return 'anti-piracy ascii art', 404
+		return 'anti-piracy ascii art', 404  # TODO
 	head = db.get_implant_name('head', abomination[5])
 	eye = db.get_implant_name('eye', abomination[6])
 	body = db.get_implant_name('body', abomination[7])

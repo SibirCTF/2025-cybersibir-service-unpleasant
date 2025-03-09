@@ -5,7 +5,15 @@
     <a href="login">LOGIN</a>
     <text>index</text>
 {% endblock %}
-{% block funny_logo %} <h1>REGISTEREGISTERREGISTERREGISTERREGISTERREGISTERREGISTER</h1> {% endblock %}
+{% block funny_logo %}
+<h1>REGISTEREGISTERREGISTERREGISTERREGISTERREGISTERREGISTER</h1>
+
+{% if error %}
+    <h1>{{ error }}</h1>
+{% endif %}
+
+{% endblock %}
+
 {% block page_content %}
 <form action="{{ url_for('register') }}" method="post">
 <div class="form_list">
