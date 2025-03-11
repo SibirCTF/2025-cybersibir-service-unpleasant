@@ -165,3 +165,7 @@ cython_debug/
 /.idea/modules.xml
 /.idea/misc.xml
 /.idea/workspace.xml
+
+
+# custom
+/service/db_data
