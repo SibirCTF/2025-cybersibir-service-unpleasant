@@ -104,15 +104,15 @@ class Session:
         r.raise_for_status()
 
 
-# __ TEST ZONE __
-user = generate_user(str(random.randint(1, 1000)))
-ses = Session('127.0.0.1', user)
-flag = 'penis123'
-hui = '324'
-
-ses.register_user()
-ses.login_user()
-ses.create_abomination()
-ses.create_abomination(flag)
-
-ses.check_my_abominations(hui)
+# # __ TEST ZONE __
+# user = generate_user(str(random.randint(1, 1000)))
+# ses = Session('127.0.0.1', user)
+# flag = 'penis123'
+# hui = '324'
+# 
+# ses.register_user()
+# ses.login_user()
+# ses.create_abomination()
+# ses.create_abomination(flag)
+# 
+# ses.check_my_abominations(hui)
