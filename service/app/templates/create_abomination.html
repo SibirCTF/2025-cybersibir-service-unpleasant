@@ -8,72 +8,72 @@
 {% endblock %}
 {% block funny_logo %} <h1>CREATE ABOMINATION</h1> {% endblock %}
 {% block page_content %}
-<form action="{{ url_for('create_abomination') }}" method="post" class="create__list">
-<div class="create__list">
+<form action="{{ url_for('create_abomination') }}" method="post" >
+<div>
 
-<div class="create__field name">
-  <label class="create__title">
-    <input type="text" class="field__input" name="name" placeholder="Name" />
+<div>
+  <label>
+    <input type="text" name="name" placeholder="Name" required />
   </label>
 </div>
 
-<div class="create__field name">
-  <label class="create__title">
-    <input type="text" class="field__input" name="gender" placeholder="Gender" required />
+<div>
+  <label>
+    <input type="text" name="gender" placeholder="Gender" required />
   </label>
 </div>
 
-<div class="create__field select">
-  <select name="head" class="create__select">
-    <option value="head" disabled selected hidden>Head</option>
+<div>
+  <select name="head" required>
+    <option value="" disabled selected hidden >Head</option>
     {% for head in heads %}
     <option value="{{head[2]}}">{{head[1]}}</option>
     {% endfor %}
   </select>
 </div>
 
-<div class="create__field select">
-  <select name="eye" class="create__select">
-    <option value="eye" disabled selected hidden>Eye</option>
+<div>
+  <select name="eye" required>
+    <option value="" disabled selected hidden>Eye</option>
     {% for eye in eyes %}
     <option value="{{eye[2]}}">{{eye[1]}}</option>
     {% endfor %}
   </select>
 </div>
 
-<div class="create__field select">
-  <select name="body" class="create__select">
-    <option value="body" disabled selected hidden>Body</option>
+<div>
+  <select name="body" required>
+    <option value="" disabled selected hidden>Body</option>
     {% for body in bodies %}
     <option value="{{body[2]}}">{{body[1]}}</option>
     {% endfor %}
   </select>
 </div>
 
-<div class="create__field select">
-  <select name="arm" class="create__select">
-    <option value="arm" disabled selected hidden>Arm</option>
+<div>
+  <select name="arm" required>
+    <option value="" disabled selected hidden>Arm</option>
     {% for arm in arms %}
     <option value="{{arm[2]}}">{{arm[1]}}</option>
     {% endfor %}
   </select>
 </div>
 
-<div class="create__field select">
-  <select name="leg" class="create__select">
-    <option value="leg" disabled selected hidden>Leg</option>
+<div>
+  <select name="leg" required>
+    <option value="" disabled selected hidden>Leg</option>
     {% for leg in legs %}
     <option value="{{leg[2]}}">{{leg[1]}}</option>
     {% endfor %}
   </select>
 </div>
 
-<label class="create__check">
-  <span class="check__label">Private</span>
-  <input type="checkbox" class="check__input" name="is_private" value="True"/>
-  <span class="check__mark"></span>
+<label>
+  <span>Private</span>
+  <input type="checkbox" name="is_private" value="True"/>
+  <span></span>
 </label>
-<input type="submit" class="create__submit" value="Создать">
+<input type="submit" value="Создать">
 </div>
 </form>
 {% endblock %}

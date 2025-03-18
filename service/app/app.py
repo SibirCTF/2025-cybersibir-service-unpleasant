@@ -95,7 +95,7 @@ def get_abomination(abom_id):
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	abomination = db.abomination(abom_id, user_id)
 	if abomination is False:
-		return 'anti-piracy ascii art', 404
+		return render_template("404.html"), 404
 	head = db.get_implant_name('head', abomination[5])
 	eye = db.get_implant_name('eye', abomination[6])
 	body = db.get_implant_name('body', abomination[7])
@@ -111,7 +111,7 @@ def api_get_abomination(abom_id):
 	user_id = jwt.decode(request.cookies['diy_session'], jwt_key, algorithms='HS256')['user_id']
 	abomination = db.abomination(abom_id, user_id)
 	if abomination is False:
-		return 'anti-piracy ascii art', 404  # TODO
+		return 'anti-piracy ascii art', 404
 	head = db.get_implant_name('head', abomination[5])
 	eye = db.get_implant_name('eye', abomination[6])
 	body = db.get_implant_name('body', abomination[7])

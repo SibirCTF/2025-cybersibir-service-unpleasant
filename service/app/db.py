@@ -2,6 +2,7 @@ import psycopg2
 import json
 from config import Config
 # TODO: sqlescape?
+# TODO: Prikols
 
 
 def get_db_connection():
