@@ -85,7 +85,7 @@ class Session:
         """ checks private post for accessibility and FLAG if provided """
         r = self.session.get(f"{self.base_url}/api/abomination/{abom_id}", timeout=self.timeout)
         r.raise_for_status()
-        print(r.json())
+        # print(r.json())
         if flag is not None:  # sorry
             if flag != r.json()[1]:
                 raise FlagProblem("Flag is not found in post profile")
@@ -103,16 +103,3 @@ class Session:
         r = self.session.get(f"{self.base_url}/logout", timeout=self.timeout)
         r.raise_for_status()
 
-
-# # __ TEST ZONE __
-# user = generate_user(str(random.randint(1, 1000)))
-# ses = Session('127.0.0.1', user)
-# flag = 'penis123'
-# hui = '324'
-# 
-# ses.register_user()
-# ses.login_user()
-# ses.create_abomination()
-# ses.create_abomination(flag)
-# 
-# ses.check_my_abominations(hui)
