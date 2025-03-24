@@ -4,7 +4,7 @@ import dataclasses
 import hashlib
 from names import Names
 
-MAX_IMPLANTS = 3  # TODO: more implants
+MAX_IMPLANTS = 8
 
 
 @dataclasses.dataclass
@@ -18,7 +18,7 @@ def hash_int(string: str) -> int:
 
 
 def gen_username(flag_id: str) -> str:
-    return f"user{str(hash_int('username' + flag_id))[:8]}"  # add #
+    return f"user{str(hash_int('username' + flag_id))[:8]}"
 
 
 def generate_user(flag_id: str) -> User:

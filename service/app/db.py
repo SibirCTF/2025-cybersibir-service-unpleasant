@@ -1,8 +1,5 @@
 import psycopg2
-import json
 from config import Config
-# TODO: sqlescape?
-# TODO: Prikols
 
 
 def get_db_connection():
@@ -12,6 +9,10 @@ def get_db_connection():
 	                        user='postgres',
 	                        password='postgres')
 	return conn
+
+
+def escape(parameter):
+	return parameter.replace("'", "''").replace("\\", "\\\\").replace("\"", "\\\"").replace(";", "\\;").replace("--", "\\--").replace("#", "\\#").replace("%", "\\%").replace("_", "\\_")
 
 
 def register_user(username, password):
@@ -33,7 +34,7 @@ def register_user(username, password):
 def login_user(username, password):
 	conn = get_db_connection()
 	cursor = conn.cursor()
-	cursor.execute(f"SELECT id FROM users WHERE username='{username}' AND password='{password}'")
+	cursor.execute(f"SELECT id FROM users WHERE username='{escape(username)}' AND password='{password}'")
 	user = cursor.fetchall()
 	if not user:
 		return False
