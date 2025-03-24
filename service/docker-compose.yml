@@ -1,6 +1,5 @@
 version: "3.1"
 services:
-
     unpleasant_service:
       container_name: unpleasant_service
       build: .
@@ -8,6 +7,8 @@ services:
         - 5000:5000
       depends_on:
         - unpleasant_db
+      networks:
+        - unpleasant_net
 
     unpleasant_db:
       container_name: unpleasant_db
@@ -17,11 +18,15 @@ services:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
         POSTGRES_DB: unpleasant_db
-      ports:
-        - 5435:5432
       volumes:
         - ./app/init.sql:/docker-entrypoint-initdb.d/init.sql
         - ./db_data/:/var/lib/postgresql/data
+      networks:
+        - unpleasant_net
+
+networks:
+  unpleasant_net:
+    driver: bridge
 
 volumes:
   pgdata: { }
