@@ -47,8 +47,9 @@ def check(host: str, flag_id: str, flag: str):
 
 
 def ping(host) -> bool:
-    ping_timeout = 2
-    response = os.system(f"timeout {ping_timeout}s ping -c 1 {host} > /dev/null 2>&1")
+    ping_timeout = 3
+    response = os.system(f"curl --connect-timeout {ping_timeout} -s -o /dev/null {host}")
+    print(host, response)
     return response == 0
 
 
