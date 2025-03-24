@@ -1,5 +1,4 @@
 import random
-import faker
 import dataclasses
 import hashlib
 from names import Names
