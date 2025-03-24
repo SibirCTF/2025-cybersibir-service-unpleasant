@@ -4,7 +4,6 @@ import db
 import os
 import jwt
 from config import Config
-# todo: ssti?
 app = Flask(__name__, template_folder="templates")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 28800
 with open('app/static/key.txt') as keyfile:
