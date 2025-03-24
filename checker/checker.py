@@ -46,19 +46,8 @@ def check(host: str, flag_id: str, flag: str):
     return StatusCode.OK
 
 
-def ping(host) -> bool:
-    ping_timeout = 3
-    response = os.system(f"curl --connect-timeout {ping_timeout} -s -o /dev/null {host}")
-    print(host, response)
-    return response == 0
-
-
 def handler(host: str, command, flag_id: str, flag: str):
     local_logger.info("checker started")
-
-    if not ping(host):
-        local_logger.info("host is not answering")
-        exit(StatusCode.DOWN)
 
     if command == PUT_COMMAND:
         status_code = put(host, flag_id, flag)
