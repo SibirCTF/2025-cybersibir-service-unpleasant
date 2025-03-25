@@ -31,8 +31,8 @@ def generate_user(flag_id: str) -> User:
 
 
 def generate_abomination():
-    abom_name = Names.names[random.randint(0, len(Names.names))],
-    abom_gender = Names.genders[random.randint(0, len(Names.genders))],
+    abom_name = Names.names[random.randint(0, len(Names.names)-1)],
+    abom_gender = Names.genders[random.randint(0, len(Names.genders)-1)],
     abom_head = random.randint(1, MAX_IMPLANTS),
     abom_eye = random.randint(1, MAX_IMPLANTS),
     abom_body = random.randint(1, MAX_IMPLANTS),
