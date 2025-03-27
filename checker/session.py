@@ -11,7 +11,7 @@ logger = logging.getLogger("UNPLEASANT Checker")
 class Session:
     base_url = str
     port = 5000
-    timeout = 3
+    timeout = 2
     session = requests.Session
     current_user = User
 

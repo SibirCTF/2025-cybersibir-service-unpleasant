@@ -22,6 +22,7 @@ class StatusCode(IntEnum):
     CORRUPT = 102
     MUMBLE = 103
     DOWN = 104
+    SHIT = 105
 
 
 def put(host: str, flag_id: str, flag: str):
@@ -59,7 +60,7 @@ def handler(host: str, command, flag_id: str, flag: str):
         local_logger.info("check command has ended with %d status code", status_code)
         exit(status_code)
 
-    exit(StatusCode.MUMBLE)
+    exit(StatusCode.SHIT)
 
 
 if __name__ == "__main__":
@@ -82,7 +83,7 @@ if __name__ == "__main__":
 
     except requests.exceptions.Timeout:
         local_logger.error("TIMEOUT TIMEOUT")
-        exit(StatusCode.MUMBLE)
+        exit(StatusCode.DOWN)
 
     except requests.exceptions.ConnectionError:
         local_logger.error("CONNECTION ERROR CONNECTION ERROR")
