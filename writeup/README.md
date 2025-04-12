@@ -11,7 +11,7 @@ with that token we can get access to private abominations of user.
 
 #solution:
 
-change secret
+change secret generator
 
 
 2. SQL injection
