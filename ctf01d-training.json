@@ -1,0 +1,37 @@
+{
+  "service_name": "2025-cybersibir-service-unpleasant",
+  "display_name": "Unpleasant",
+  "ctf_event": "CyberSibir 2025",
+  "year": 2025,
+  "description": "service unpleasant for ctf with vulnerabilities",
+  "author": "@kibertard",
+  "service_port": 5000,
+  "languages": [
+    "Python"
+  ],
+  "tech_stack": [
+    "Python",
+    "Alpine Linux",
+    "Flask"
+  ],
+  "dependencies": {
+    "runtime": [
+      "Faker",
+      "requests"
+    ],
+    "development": [],
+    "system": []
+  },
+  "vulnerabilities": [
+    {
+      "type": "SQL Injection",
+      "description": "SQL injection",
+      "severity": "High"
+    }
+  ],
+  "metadata": {
+    "difficulty": null,
+    "category": null,
+    "tags": []
+  }
+}
