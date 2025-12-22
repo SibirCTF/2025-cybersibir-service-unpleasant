@@ -10,14 +10,15 @@
     "Python"
   ],
   "tech_stack": [
-    "Python",
     "Alpine Linux",
-    "Flask"
+    "Flask",
+    "PostgreSQL"
   ],
   "dependencies": {
     "runtime": [
-      "Faker",
-      "requests"
+      "Flask",
+      "psycopg2-binary",
+      "PyJWT"
     ],
     "development": [],
     "system": []
@@ -25,7 +26,12 @@
   "vulnerabilities": [
     {
       "type": "SQL Injection",
-      "description": "SQL injection",
+      "description": "Запросы к БД выполняются без параметризации.",
+      "severity": "High"
+    },
+    {
+      "type": "Hardcoded Secret",
+      "description": "JWT секрет хранится в static/key.txt и позволяет подписывать токены с чужим user_id.",
       "severity": "High"
     }
   ],
